@@ -58,6 +58,9 @@ public class PatientServicesImpl implements PatientServices {
 		return PATIENT_ARRAY;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Patient updateAnExistingPatient(int id, String name, int age) throws PatientWithIdNotFoundException {
 		// TODO Auto-generated method stub
@@ -74,11 +77,34 @@ public class PatientServicesImpl implements PatientServices {
 	}
 
 	@Override
-	public Patient deleteAPatient(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Patient deleteAPatient(int id) throws PatientWithIdNotFoundException {
+		Patient patients[] = new Patient[PATIENT_ARRAY.length];
+		Patient patient, deletedPatient = null;
+		boolean flag = false;
+		for (int looper = 0; looper < findNumberOfPatients(); looper++) {
+			patient = PATIENT_ARRAY[looper];
+			if (patient.getPatientId() == id) {
+				deletedPatient = patient;
+				flag = true;
+			} else {
+				patients[looper] = patient;
+			}
+		}
+		if (!flag) {
+			throw new PatientWithIdNotFoundException();
+		} else {
+			PATIENT_ARRAY = patients;
+			return deletedPatient;
+		}
 	}
 	
+	/**
+	 * 
+	 * HELPER METHODS
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public boolean findIfUserIdExists(int id) {
 		for (int looper = 0; looper < PATIENT_ARRAY.length  && PATIENT_ARRAY[looper] != null; looper++) {
 			if (PATIENT_ARRAY[looper].getPatientId() == id)
@@ -104,5 +130,4 @@ public class PatientServicesImpl implements PatientServices {
 		}
 		return count;
 	}
-
 }

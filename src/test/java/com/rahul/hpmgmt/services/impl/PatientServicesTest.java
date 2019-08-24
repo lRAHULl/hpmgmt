@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.rahul.hpmgmt.exceptions.PatientWithIdNotFoundException;
 import com.rahul.hpmgmt.model.Patient;
 
 import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
@@ -43,7 +42,7 @@ public class PatientServicesTest {
 			assertEquals(exceptionName, "IdAlreadyExistsException");
 		}
 	}
-	
+	 
 	@Test
 	public void readAllPatientsTest() throws Exception {
 		patient.createANewPatient(1, "AAAA", 19);
@@ -58,5 +57,17 @@ public class PatientServicesTest {
 		LOGGER.info("Name: " + PATIENT_ARRAY[0].getPatientName());
 		Patient updatedPatient = patient.updateAnExistingPatient(1, "BBBB", 20);
 		assertEquals(updatedPatient.getPatientName(), "BBBB");
+	}
+	
+	@Test
+	public void deleteAPatient() throws Exception {
+		patient.createANewPatient(1, "AAAA", 19);
+		patient.createANewPatient(2, "BBBb", 20);
+		LOGGER.info("Name: " + PATIENT_ARRAY[0].getPatientAge());
+		LOGGER.info("Name: " + PATIENT_ARRAY[1].getPatientAge());
+		LOGGER.info("Size: " + patient.findNumberOfPatients());
+		Patient updatedPatient = patient.deleteAPatient(2);
+		LOGGER.info("Size: " + patient.findNumberOfPatients());
+		assertEquals(updatedPatient.getPatientName(), "BBBb");
 	}
 }

@@ -6,7 +6,7 @@
       <class name="com.rahul.hpmgmt.services.impl.PatientServicesTest">
         <methods>
           <include name="setUp"/>
-          <include name="updateAnExistingPatientTest"/>
+          <include name="deleteAPatient"/>
         </methods>
       </class> <!-- com.rahul.hpmgmt.services.impl.PatientServicesTest -->
     </classes>

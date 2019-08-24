@@ -16,6 +16,6 @@ public interface PatientServices {
 	public boolean createANewPatient(int id, String name, int age) throws IdAlreadyExistsException, PatientDirectoryFullException;
 	public Patient[] readAllPatient();
 	public Patient updateAnExistingPatient(int id, String name, int age) throws PatientWithIdNotFoundException;
-	public Patient deleteAPatient(int id);
+	public Patient deleteAPatient(int id) throws PatientWithIdNotFoundException;
 	public int findNumberOfPatients();
 }
