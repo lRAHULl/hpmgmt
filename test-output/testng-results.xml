@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="3" total="4" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="69" started-at="2019-08-24T23:15:44 IST" finished-at="2019-08-24T23:15:44 IST">
+  <suite name="Default suite" duration-ms="134" started-at="2019-08-24T23:17:51 IST" finished-at="2019-08-24T23:17:52 IST">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="69" started-at="2019-08-24T23:15:44 IST" finished-at="2019-08-24T23:15:44 IST">
+    <test name="Default test" duration-ms="134" started-at="2019-08-24T23:17:51 IST" finished-at="2019-08-24T23:17:52 IST">
       <class name="com.rahul.hpmgmt.services.impl.PatientServicesTest">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@7a187f14]" name="setUp" is-config="true" duration-ms="12" started-at="2019-08-24T23:15:44 IST" finished-at="2019-08-24T23:15:44 IST">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="setUp" is-config="true" duration-ms="14" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="deleteAPatient()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@7a187f14]" name="deleteAPatient" duration-ms="12" started-at="2019-08-24T23:15:44 IST" finished-at="2019-08-24T23:15:44 IST">
+        <test-method status="PASS" signature="createANewPatientTest()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="createANewPatientTest" duration-ms="23" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createANewPatientTest -->
+        <test-method status="PASS" signature="deleteAPatient()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="deleteAPatient" duration-ms="3" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- deleteAPatient -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="setUp" is-config="true" duration-ms="0" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="setUp" is-config="true" duration-ms="1" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="readAllPatientsTest()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="readAllPatientsTest" duration-ms="2" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- readAllPatientsTest -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="setUp" is-config="true" duration-ms="1" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="updateAnExistingPatientTest()[pri:0, instance:com.rahul.hpmgmt.services.impl.PatientServicesTest@1bb740f2]" name="updateAnExistingPatientTest" duration-ms="7" started-at="2019-08-24T23:17:52 IST" finished-at="2019-08-24T23:17:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateAnExistingPatientTest -->
       </class> <!-- com.rahul.hpmgmt.services.impl.PatientServicesTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

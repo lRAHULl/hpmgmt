@@ -55,6 +55,11 @@ public class PatientServicesImpl implements PatientServices {
 	public Patient[] readAllPatient() {
 		// TODO Auto-generated method stub
 		LOGGER.info("In ReadAllPatients method");
+		Patient patients[] = new Patient[findNumberOfPatients()];
+		for (int looper = 0; looper < findNumberOfPatients(); looper++) {
+			System.out.println(PATIENT_ARRAY[looper].getPatientId() + "\t" + PATIENT_ARRAY[looper].getPatientName() + "\t" + PATIENT_ARRAY[looper].getPatientAge());
+			patients[looper] = PATIENT_ARRAY[looper];
+		}
 		return PATIENT_ARRAY;
 	}
 

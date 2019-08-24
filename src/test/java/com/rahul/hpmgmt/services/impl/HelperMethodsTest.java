@@ -26,7 +26,7 @@ public class HelperMethodsTest {
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-		PATIENT_ARRAY = new Patient[10];
+//		PATIENT_ARRAY = new Patient[10];
 	}
 	
 	@Test

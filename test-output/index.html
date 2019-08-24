@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">4 methods,   4 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -102,7 +102,22 @@
                     <div class="method-list-content passed suite-Default_suite">
                       <span>
                         <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.rahul.hpmgmt.services.impl.PatientServicesTest" hash-for-method="createANewPatientTest">createANewPatientTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.rahul.hpmgmt.services.impl.PatientServicesTest" hash-for-method="deleteAPatient">deleteAPatient</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.rahul.hpmgmt.services.impl.PatientServicesTest" hash-for-method="readAllPatientsTest">readAllPatientsTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.rahul.hpmgmt.services.impl.PatientServicesTest" hash-for-method="updateAnExistingPatientTest">updateAnExistingPatientTest</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -125,9 +140,30 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
+                  <a name="createANewPatientTest">
+                  </a> <!-- createANewPatientTest -->
+                  <span class="method-name">createANewPatientTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
                   <a name="deleteAPatient">
                   </a> <!-- deleteAPatient -->
                   <span class="method-name">deleteAPatient</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="readAllPatientsTest">
+                  </a> <!-- readAllPatientsTest -->
+                  <span class="method-name">readAllPatientsTest</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="updateAnExistingPatientTest">
+                  </a> <!-- updateAnExistingPatientTest -->
+                  <span class="method-name">updateAnExistingPatientTest</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -135,7 +171,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">/tmp/testng-eclipse--1016574663/testng-customsuite.xml</span>
+            <span class="header-content">/tmp/testng-eclipse--1118781598/testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -144,11 +180,15 @@
 &lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Default suite&quot;&gt;
   &lt;test thread-count=&quot;5&quot; verbose=&quot;2&quot; name=&quot;Default test&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;com.rahul.hpmgmt.services.impl.PatientServicesTest&quot;&gt;
-        &lt;methods&gt;
-          &lt;include name=&quot;deleteAPatient&quot;/&gt;
-        &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- com.rahul.hpmgmt.services.impl.PatientServicesTest --&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.constants.PatientConstants&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.main.Main&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.PatientsArray&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.model.Patient&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.services.impl.PatientServicesImpl&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.services.impl.PatientServicesTest&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.exceptions.IdAlreadyExistsException&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.exceptions.PatientDirectoryFullException&quot;/&gt;
+      &lt;class name=&quot;com.rahul.hpmgmt.services.PatientServices&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Default test --&gt;
 &lt;/suite&gt; &lt;!-- Default suite --&gt;
@@ -162,7 +202,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Default test (1 class)</span>
+                <span class="test-name">Default test (9 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -188,16 +228,28 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(4);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'deleteAPatient')
+data.setCell(0, 1, 'createANewPatientTest')
 data.setCell(0, 2, 'com.rahul.hpmgmt.services.impl.PatientServicesTest')
-data.setCell(0, 3, 12);
+data.setCell(0, 3, 23);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'updateAnExistingPatientTest')
+data.setCell(1, 2, 'com.rahul.hpmgmt.services.impl.PatientServicesTest')
+data.setCell(1, 3, 7);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'deleteAPatient')
+data.setCell(2, 2, 'com.rahul.hpmgmt.services.impl.PatientServicesTest')
+data.setCell(2, 3, 3);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'readAllPatientsTest')
+data.setCell(3, 2, 'com.rahul.hpmgmt.services.impl.PatientServicesTest')
+data.setCell(3, 3, 2);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 12 ms</span>
+              <span class="suite-total-time">Total running time: 35 ms</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -212,20 +264,9 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">3 ignored methods</span>
+            <span class="header-content">0 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
-            <div class="ignored-class-div">
-              <span class="ignored-class-name">com.rahul.hpmgmt.services.impl.PatientServicesTest</span>
-              <div class="ignored-methods-div">
-                <span class="ignored-method-name">updateAnExistingPatientTest</span>
-                <br/>
-                <span class="ignored-method-name">readAllPatientsTest</span>
-                <br/>
-                <span class="ignored-method-name">createANewPatientTest</span>
-                <br/>
-              </div> <!-- ignored-methods-div -->
-            </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="chronological-Default_suite" class="panel">
@@ -240,8 +281,32 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
+                <span class="method-name">createANewPatientTest</span>
+                <span class="method-start">15 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">43 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
                 <span class="method-name">deleteAPatient</span>
-                <span class="method-start">12 ms</span>
+                <span class="method-start">43 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">48 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">readAllPatientsTest</span>
+                <span class="method-start">49 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method before">
+                <span class="method-name">setUp</span>
+                <span class="method-start">53 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">updateAnExistingPatientTest</span>
+                <span class="method-start">54 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

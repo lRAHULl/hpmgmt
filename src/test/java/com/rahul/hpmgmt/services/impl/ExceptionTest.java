@@ -24,13 +24,13 @@ public class ExceptionTest {
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-		PATIENT_ARRAY = new Patient[10];
+//		PATIENT_ARRAY = new Patient[10];
 	}
 	
 	@Test
 	public void patientDirectoryFullExceptionTest() {
 		try {
-			patient.createANewPatient(1, "AAAA", 19);
+			patient.createANewPatient(1, "AAAA", 19); 
 			patient.createANewPatient(2, "AAAA", 19);
 			patient.createANewPatient(3, "AAAA", 19);
 			patient.createANewPatient(4, "AAAA", 19);

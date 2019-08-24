@@ -27,7 +27,7 @@ public class PatientServicesTest {
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-		PATIENT_ARRAY = new Patient[10];
+//		PATIENT_ARRAY = new Patient[10];
 	}
 	
 	@Test
@@ -36,7 +36,7 @@ public class PatientServicesTest {
 		try {
 			boolean status = patient.createANewPatient(1, "ABCD", 19);
 //			patient.createANewPatient(1, "ABCD", 19);
-			assertTrue(status);
+			assertTrue(status); 
 		} catch (Exception e) {
 			String exceptionName = e.getClass().getSimpleName();
 			assertEquals(exceptionName, "IdAlreadyExistsException");
