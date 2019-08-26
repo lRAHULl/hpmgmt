@@ -3,6 +3,9 @@
  */
 package com.rahul.hpmgmt;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.rahul.hpmgmt.model.Patient;
 
 /**
@@ -10,5 +13,5 @@ import com.rahul.hpmgmt.model.Patient;
  *
  */
 public class PatientsArray {
-	public static Patient[] PATIENT_ARRAY = new Patient[10];
+	public static Map<Integer, Patient> PATIENT_ARRAY = new HashMap<Integer, Patient>();
 }

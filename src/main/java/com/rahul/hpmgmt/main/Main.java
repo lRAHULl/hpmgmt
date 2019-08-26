@@ -3,6 +3,8 @@
  */
 package com.rahul.hpmgmt.main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.rahul.hpmgmt.exceptions.IdAlreadyExistsException;
@@ -31,16 +33,29 @@ public class Main {
 			System.out.println("2. Read All Patients");
 			System.out.println("3. Update an existing Patient");
 			System.out.println("4. Delete a patient");
+			System.out.println("5. Exit");
 			System.out.print("Enter a number to do a operation: ");
 			choice = Integer.valueOf(scanner.nextLine());
 			switch(choice) {
 			case 1:
 				patientServices = new PatientServicesImpl();
+				System.out.print("Enter the Id: ");
 				patientId = Integer.valueOf(scanner.nextLine());
+				System.out.print("Enter the Name: ");
 				patientName = scanner.nextLine();
+				System.out.print("Enter the age: ");
 				patientAge = Integer.valueOf(scanner.nextLine());
+				List<String> patientAddress = new ArrayList<String>();
+				for (int i = 0; i < 3; i++) {
+					int index = i + 1;
+					System.out.print("Enter the address line " + index + ": ");
+					String addr = scanner.nextLine();
+					if (!addr.equals("")) {
+						patientAddress.add(addr);
+					}					
+				}
 				try {
-					patientServices.createANewPatient(patientId, patientName, patientAge);
+					patientServices.createANewPatient(patientId, patientName, patientAge, patientAddress);
 				} catch (PatientDirectoryFullException | IdAlreadyExistsException e) {
 					if (e.getClass().getSimpleName().equals("PatientDirectoryFullException")) {
 						System.out.println("The directory is full :(");
@@ -51,16 +66,29 @@ public class Main {
 				break;
 			case 2:
 				patientServices = new PatientServicesImpl();
-				System.out.println("Id" + "\t" + "Name" + "\t" + "Age");
-				patientServices.readAllPatient();
+				System.out.println(patientServices.readAllPatient().toString());
 				break;
 			case 3:
 				patientServices = new PatientServicesImpl();
+				System.out.print("Enter the Id: ");
 				patientId = Integer.valueOf(scanner.nextLine());
+				System.out.print("Enter the new Name: ");
 				patientName = scanner.nextLine();
+				System.out.print("Enter the new age: ");
 				patientAge = Integer.valueOf(scanner.nextLine());
+				List<String> patientUpdateAddress = new ArrayList<String>();
+				for (int i = 0; i < 3; i++) {
+					int index = i + 1;
+					System.out.print("Enter the new address line " + index + ": ");
+					
+					String addr = scanner.nextLine();
+					if (!addr.equals(""))
+						patientUpdateAddress.add(addr);	
+					else 
+						patientUpdateAddress.add(patientServices.readAllPatient().get(patientId).getPatientAddress().get(i));
+				}
 				try {
-					Patient updatedPatient = patientServices.updateAnExistingPatient(patientId, patientName, patientAge);
+					Patient updatedPatient = patientServices.updateAnExistingPatient(patientId, patientName, patientAge, patientUpdateAddress);
 					System.out.println("UPDATED PATIENT\n-------------------- \n Id: " + updatedPatient.getPatientId() + " Name: " + updatedPatient.getPatientName() + " Age: " + updatedPatient.getPatientAge());
 				} catch (Exception e) {
 					if (e.getClass().getSimpleName().equals("PatientWithIdNotFoundException")) {

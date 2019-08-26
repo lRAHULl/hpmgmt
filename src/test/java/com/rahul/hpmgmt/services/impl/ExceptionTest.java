@@ -4,7 +4,10 @@
 package com.rahul.hpmgmt.services.impl;
 
 import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
+import static com.rahul.hpmgmt.constants.PatientTestConstants.*;
 import static org.testng.Assert.assertEquals;
+
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,54 +22,33 @@ import com.rahul.hpmgmt.model.Patient;
  */
 public class ExceptionTest {
 	PatientServicesImpl patient;
-	public static final Logger LOGGER = LoggerFactory.getLogger(HelperMethodsTest.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(Exception.class);
 	
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-//		PATIENT_ARRAY = new Patient[10];
-	}
-	
-	@Test
-	public void patientDirectoryFullExceptionTest() {
-		try {
-			patient.createANewPatient(1, "AAAA", 19); 
-			patient.createANewPatient(2, "AAAA", 19);
-			patient.createANewPatient(3, "AAAA", 19);
-			patient.createANewPatient(4, "AAAA", 19);
-			patient.createANewPatient(5, "AAAA", 19);
-			patient.createANewPatient(6, "AAAA", 19);
-			patient.createANewPatient(7, "AAAA", 19);
-			patient.createANewPatient(8, "AAAA", 19);
-			patient.createANewPatient(9, "AAAA", 19); 
-			patient.createANewPatient(10, "AAAA", 19);
-			patient.createANewPatient(11, "AAAA", 19);
-		} catch (Exception e) {
-			// TODO: handle exception
-			String actualExceptionName = e.getClass().getSimpleName();
-			assertEquals(actualExceptionName, "PatientDirectoryFullException");
-		}
+		PATIENT_ARRAY = new HashMap<Integer, Patient>();
 	}
 	
 	@Test
 	public void idAlreadyExistsExceptionTest() {
 		try {
-			patient.createANewPatient(1, "name", 19);
-			patient.createANewPatient(1, "aaaa", 12);
+			patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE);
+			patient.createANewPatient(ID_ONE, NAME_TWO, AGE_TWO, ADDRESS_TWO);
 		} catch (Exception e) {
 			String actualExceptionName = e.getClass().getSimpleName();
-			assertEquals(actualExceptionName, "IdAlreadyExistsException");
+			assertEquals(actualExceptionName, ID_ALREADY_EXISTS_EXCEPTION);
 		}
 	}
 	
 	@Test
 	public void patientWithIdNotFoundExceptionTest() {
 		try {
-			patient.createANewPatient(1, "name", 19);
-			patient.updateAnExistingPatient(2, "bbbb", 15);
+			patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE);
+			patient.updateAnExistingPatient(ID_TWO, NAME_TWO, AGE_TWO, ADDRESS_TWO);
 		} catch (Exception e) {
 			String actualExceptionName = e.getClass().getSimpleName();
-			assertEquals(actualExceptionName, "PatientWithIdNotFoundException");
+			assertEquals(actualExceptionName, PATIENT_WITH_ID_NOT_FOUND_EXCEPTION);
 		}
 	}
 }

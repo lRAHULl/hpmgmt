@@ -3,6 +3,7 @@
  */
 package com.rahul.hpmgmt.model;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -18,9 +19,17 @@ public class Patient {
 	private int patientId;
 	private String patientName;
 	private int patientAge;
+	private List<String> patientAddress;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Patient.class);
 	private static final ResourceBundle MESSAGE_BUNDLER = ResourceBundle.getBundle(LOGGER_MESSAGES);
+	
+	public List<String> getPatientAddress() {
+		return patientAddress;
+	}
+	public void setPatientAddress(List<String> patientAddress) {
+		this.patientAddress = patientAddress;
+	}
 	
 	public int getPatientId() {
 		LOGGER.info("invoked the getPatientId method");
@@ -49,8 +58,8 @@ public class Patient {
 	
 	@Override
 	public String toString() {
-		LOGGER.info("Invoked the toString method in Patient model");
-		return "Patient [patientId=" + patientId + ", patientName=" + patientName + ", patientAge=" + patientAge + "]";
+		return "Patient [patientId=" + patientId + ", patientName=" + patientName + ", patientAge=" + patientAge
+				+ ", patientAddress=" + patientAddress + "]";
 	}
 	
 }

@@ -6,6 +6,10 @@ package com.rahul.hpmgmt.services.impl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
@@ -14,6 +18,7 @@ import org.testng.annotations.Test;
 import com.rahul.hpmgmt.model.Patient;
 
 import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
+import static com.rahul.hpmgmt.constants.PatientTestConstants.*;
 
 /**
  * @author rahul
@@ -23,51 +28,58 @@ public class PatientServicesTest {
 	
 	PatientServicesImpl patient;
 	public static final Logger LOGGER = LoggerFactory.getLogger(PatientServicesImpl.class);
+	ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle(MESSAGES_SOURCE);
 	
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-//		PATIENT_ARRAY = new Patient[10];
+		PATIENT_ARRAY = new HashMap<Integer, Patient>();
 	}
 	
 	@Test
 	public void createANewPatientTest() {
-		
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0000T));
 		try {
-			boolean status = patient.createANewPatient(1, "ABCD", 19);
-//			patient.createANewPatient(1, "ABCD", 19);
+			boolean status = patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE);
+			patient.createANewPatient(ID_TWO, NAME_ONE, AGE_ONE, ADDRESS_ONE);
+			patient.createANewPatient(ID_TWO, NAME_ONE, AGE_ONE, ADDRESS_ONE);
+			LOGGER.debug(PATIENT_ARRAY.toString());
+			LOGGER.debug(HPMT0000D);
 			assertTrue(status); 
 		} catch (Exception e) {
 			String exceptionName = e.getClass().getSimpleName();
-			assertEquals(exceptionName, "IdAlreadyExistsException");
+			LOGGER.error(HPMT0000E);
+			assertEquals(exceptionName, ID_ALREADY_EXISTS_EXCEPTION);
 		}
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0001T));
 	}
 	 
 	@Test
 	public void readAllPatientsTest() throws Exception {
-		patient.createANewPatient(1, "AAAA", 19);
-		patient.createANewPatient(2, "AAAA", 19);
-		patient.createANewPatient(3, "AAAA", 19);
-		assertEquals(patient.findNumberOfPatients(), 3);
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0002T));
+		patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE); 
+		patient.createANewPatient(ID_TWO, NAME_TWO, AGE_TWO, ADDRESS_TWO);
+		Map<Integer, Patient> patients = patient.readAllPatient();
+		assertEquals(patients.size(), PATIENT_ARRAY.size());
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0003T));
 	}
 	
 	@Test
 	public void updateAnExistingPatientTest() throws Exception {
-		patient.createANewPatient(1, "AAAA", 19);
-		LOGGER.info("Name: " + PATIENT_ARRAY[0].getPatientName());
-		Patient updatedPatient = patient.updateAnExistingPatient(1, "BBBB", 20);
-		assertEquals(updatedPatient.getPatientName(), "BBBB");
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0004T));
+		patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE); 
+		Patient updatedPatient = patient.updateAnExistingPatient(ID_ONE, NAME_TWO, AGE_TWO, ADDRESS_TWO); 
+		assertEquals(updatedPatient.getPatientName(), NAME_TWO);
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0005T));
 	}
 	
 	@Test
 	public void deleteAPatient() throws Exception {
-		patient.createANewPatient(1, "AAAA", 19);
-		patient.createANewPatient(2, "BBBb", 20);
-		LOGGER.info("Name: " + PATIENT_ARRAY[0].getPatientAge());
-		LOGGER.info("Name: " + PATIENT_ARRAY[1].getPatientAge());
-		LOGGER.info("Size: " + patient.findNumberOfPatients());
-		Patient updatedPatient = patient.deleteAPatient(2);
-		LOGGER.info("Size: " + patient.findNumberOfPatients());
-		assertEquals(updatedPatient.getPatientName(), "BBBb");
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0006T));
+		patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE); 
+		patient.createANewPatient(ID_TWO, NAME_TWO, AGE_TWO, ADDRESS_TWO);
+		Patient deletedPatient = patient.deleteAPatient(ID_TWO);
+		assertEquals(deletedPatient.getPatientName(), NAME_TWO);
+		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0007T));
 	}
 }

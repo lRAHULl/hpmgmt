@@ -11,6 +11,9 @@ import com.rahul.hpmgmt.services.PatientServices;
 
 import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -26,40 +29,29 @@ public class PatientServicesImpl implements PatientServices {
 	private static final ResourceBundle MESSAGE_BUNDLER = ResourceBundle.getBundle("messages");
 	
 	@Override
-	public boolean createANewPatient(int id, String name, int age) throws PatientDirectoryFullException, IdAlreadyExistsException {
+	public boolean createANewPatient(int id, String name, int age, List<String> address) throws PatientDirectoryFullException, IdAlreadyExistsException {
 		
 		LOGGER.info("Entered the CreatePatient method");
 		Patient newPatient = new Patient();
-		LOGGER.info("Created a new patient");
+		LOGGER.info("Created a new patient object");
 		
 		newPatient.setPatientId(id);
 		newPatient.setPatientName(name);
 		newPatient.setPatientAge(age);
+		newPatient.setPatientAddress(address);
 		
-		int patientCount = findNumberOfPatients();
-		if (patientCount >= PATIENT_ARRAY.length || patientCount < 0) {
-			LOGGER.error("Patient array full");
-			throw new PatientDirectoryFullException();
-		} else if (findIfUserIdExists(id)) {
+		if (PATIENT_ARRAY.containsKey(id)) {
 			LOGGER.error("Patient with Id already exists");
 			throw new IdAlreadyExistsException();
-		}	else {
-			LOGGER.info(Integer.valueOf(patientCount).toString());
-			PATIENT_ARRAY[patientCount] = newPatient;
-			LOGGER.info("exited the CreatePatient method");
+		} else {
+			PATIENT_ARRAY.putIfAbsent(newPatient.getPatientId(), newPatient);
 			return true;
 		}
 	}
 
 	@Override
-	public Patient[] readAllPatient() {
-		// TODO Auto-generated method stub
+	public Map<Integer, Patient> readAllPatient() {
 		LOGGER.info("In ReadAllPatients method");
-		Patient patients[] = new Patient[findNumberOfPatients()];
-		for (int looper = 0; looper < findNumberOfPatients(); looper++) {
-			System.out.println(PATIENT_ARRAY[looper].getPatientId() + "\t" + PATIENT_ARRAY[looper].getPatientName() + "\t" + PATIENT_ARRAY[looper].getPatientAge());
-			patients[looper] = PATIENT_ARRAY[looper];
-		}
 		return PATIENT_ARRAY;
 	}
 
@@ -67,70 +59,37 @@ public class PatientServicesImpl implements PatientServices {
 	 * 
 	 */
 	@Override
-	public Patient updateAnExistingPatient(int id, String name, int age) throws PatientWithIdNotFoundException {
+	public Patient updateAnExistingPatient(int id, String name, int age, List<String> address) throws PatientWithIdNotFoundException {
 		// TODO Auto-generated method stub
 		Patient patient;
-		if (PATIENT_ARRAY.length > 0 && findIfUserIdExists(id)) {
-			LOGGER.info("Id Of existing User " + Integer.valueOf(findIndexOfExisting(id)));
-			patient = PATIENT_ARRAY[findIndexOfExisting(id)];
+		if (PATIENT_ARRAY.containsKey(id)) {
+			LOGGER.info("Id Of existing User " + PATIENT_ARRAY.get(id));
+			patient = PATIENT_ARRAY.get(id);
 			LOGGER.info("Id Of user " + Integer.valueOf(patient.getPatientId()));
 			patient.setPatientName(name);
 			patient.setPatientAge(age);
-			return PATIENT_ARRAY[findIndexOfExisting(id)];
+			patient.setPatientAddress(address);
+			return PATIENT_ARRAY.get(id);
 		}
 		throw new PatientWithIdNotFoundException();
 	}
 
 	@Override
 	public Patient deleteAPatient(int id) throws PatientWithIdNotFoundException {
-		Patient patients[] = new Patient[PATIENT_ARRAY.length];
-		Patient patient, deletedPatient = null;
-		boolean flag = false;
-		for (int looper = 0; looper < findNumberOfPatients(); looper++) {
-			patient = PATIENT_ARRAY[looper];
-			if (patient.getPatientId() == id) {
-				deletedPatient = patient;
-				flag = true;
-			} else {
-				patients[looper] = patient;
-			}
-		}
-		if (!flag) {
-			throw new PatientWithIdNotFoundException();
-		} else {
-			PATIENT_ARRAY = patients;
+		if (PATIENT_ARRAY.containsKey(id)) {
+			Patient deletedPatient =  PATIENT_ARRAY.remove(id);
 			return deletedPatient;
+		} else {
+			throw new PatientWithIdNotFoundException();
 		}
 	}
 	
-	/**
-	 * 
-	 * HELPER METHODS
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public boolean findIfUserIdExists(int id) {
-		for (int looper = 0; looper < PATIENT_ARRAY.length  && PATIENT_ARRAY[looper] != null; looper++) {
-			if (PATIENT_ARRAY[looper].getPatientId() == id)
-				return true;
-		}
-		return false;
-	}
-	
-	public int findIndexOfExisting(int id) {
-		for (int looper = 0; looper < PATIENT_ARRAY.length  && PATIENT_ARRAY[looper] != null; looper++) {
-			if (PATIENT_ARRAY[looper].getPatientId() == id)
-				return looper;
-		}
-		return -1;
-	}
-
 	@Override
 	public int findNumberOfPatients() {
 		int count = 0;
 		
-		for (int looper = 0; looper < PATIENT_ARRAY.length  && PATIENT_ARRAY[looper] != null; looper++) {
+		Iterator<Integer> it = PATIENT_ARRAY.keySet().iterator();
+		while(it.hasNext()) {
 			count++;
 		}
 		return count;
