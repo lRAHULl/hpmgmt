@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 
 import com.rahul.hpmgmt.model.Patient;
 
-import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
+import static com.rahul.hpmgmt.PatientsArray.PATIENT_COLLECTION;
 import static com.rahul.hpmgmt.constants.PatientTestConstants.*;
 
 /**
@@ -33,7 +33,7 @@ public class PatientServicesTest {
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-		PATIENT_ARRAY = new HashMap<Integer, Patient>();
+		PATIENT_COLLECTION = new HashMap<Integer, Patient>();
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class PatientServicesTest {
 			boolean status = patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE);
 			patient.createANewPatient(ID_TWO, NAME_ONE, AGE_ONE, ADDRESS_ONE);
 			patient.createANewPatient(ID_TWO, NAME_ONE, AGE_ONE, ADDRESS_ONE);
-			LOGGER.debug(PATIENT_ARRAY.toString());
+			LOGGER.debug(PATIENT_COLLECTION.toString());
 			LOGGER.debug(HPMT0000D);
 			assertTrue(status); 
 		} catch (Exception e) {
@@ -59,8 +59,12 @@ public class PatientServicesTest {
 		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0002T));
 		patient.createANewPatient(ID_ONE, NAME_ONE, AGE_ONE, ADDRESS_ONE); 
 		patient.createANewPatient(ID_TWO, NAME_TWO, AGE_TWO, ADDRESS_TWO);
-		Map<Integer, Patient> patients = patient.readAllPatient();
-		assertEquals(patients.size(), PATIENT_ARRAY.size());
+		try {
+			Map<Integer, Patient> patients = patient.readAllPatient();
+			assertEquals(patients.size(), PATIENT_COLLECTION.size());
+		} catch (Exception e) {
+			e.getClass().getSimpleName().equals(NO_USER_EXISTS_EXCEPTION);
+		}
 		LOGGER.info(MESSAGE_BUNDLE.getString(HPMT0003T));
 	}
 	

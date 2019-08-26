@@ -3,7 +3,7 @@
  */
 package com.rahul.hpmgmt.services.impl;
 
-import static com.rahul.hpmgmt.PatientsArray.PATIENT_ARRAY;
+import static com.rahul.hpmgmt.PatientsArray.PATIENT_COLLECTION;
 import static com.rahul.hpmgmt.constants.PatientTestConstants.*;
 import static org.testng.Assert.assertEquals;
 
@@ -27,7 +27,7 @@ public class ExceptionTest {
 	@BeforeMethod
 	public void setUp() {
 		patient = new PatientServicesImpl();
-		PATIENT_ARRAY = new HashMap<Integer, Patient>();
+		PATIENT_COLLECTION = new HashMap<Integer, Patient>();
 	}
 	
 	@Test

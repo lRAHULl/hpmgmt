@@ -15,6 +15,7 @@ public class PatientTestConstants {
 	public static String PATIENT_WITH_ID_NOT_FOUND_EXCEPTION = "PatientWithIdNotFoundException";
 	public static String ID_ALREADY_EXISTS_EXCEPTION = "IdAlreadyExistsException";
 	public static String PATIENT_DIRECTORY_FULL_EXCEPTION = "PatientDirectoryFullException";
+	public static String NO_USER_EXISTS_EXCEPTION = "NoUserExistsException";
 	public static String NAME_ONE = "AAAA";
 	public static String NAME_TWO = "BBBB";
 	public static String NAME_THREE = "CCCC";

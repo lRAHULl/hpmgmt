@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.rahul.hpmgmt.exceptions.IdAlreadyExistsException;
+import com.rahul.hpmgmt.exceptions.NoUserExistsException;
 import com.rahul.hpmgmt.exceptions.PatientDirectoryFullException;
 import com.rahul.hpmgmt.exceptions.PatientWithIdNotFoundException;
 import com.rahul.hpmgmt.model.Patient;
@@ -21,8 +22,9 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws NoUserExistsException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoUserExistsException {
 		Scanner scanner = new Scanner(System.in);
 		PatientServicesImpl patientServices;
 		int choice;
@@ -66,7 +68,11 @@ public class Main {
 				break;
 			case 2:
 				patientServices = new PatientServicesImpl();
-				System.out.println(patientServices.readAllPatient().toString());
+				try {
+					System.out.println(patientServices.readAllPatient().toString());
+				} catch (NoUserExistsException e1) {
+					System.out.println("No Users found!!");
+				}
 				break;
 			case 3:
 				patientServices = new PatientServicesImpl();
