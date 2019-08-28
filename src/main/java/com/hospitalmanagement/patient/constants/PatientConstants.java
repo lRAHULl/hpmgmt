@@ -12,6 +12,8 @@ public class PatientConstants {
 	public static final String HPM0006T = "HPM0006T";
 	public static final String HPM0007T = "HPM0007T";
 	
+	public static final String HPM0008T = "HPM0008T";
+	
 	public static final String HPM1000I = "HPM1000I";
 	public static final String HPM1001I = "HPM1001I";
 	public static final String HPM1002I = "HPM1002I";

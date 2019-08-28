@@ -3,14 +3,18 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.rahul.hpmgmt.services.impl.PatientServicesTest">
+      <class name="com.hospitalmanagement.patient.dao.impl.PatientDAOTest">
         <methods>
+          <include name="readPatientsTest"/>
+          <include name="createPatientTest"/>
+          <include name="deletePatient"/>
+          <include name="updatePatient"/>
+          <include name="flushUp"/>
           <include name="setUp"/>
-          <include name="updateAnExistingPatientTest"/>
-          <include name="deleteAPatient"/>
-          <include name="readAllPatientsTest"/>
+          <include name="reset"/>
+          <include name="testSetUp"/>
         </methods>
-      </class> <!-- com.rahul.hpmgmt.services.impl.PatientServicesTest -->
+      </class> <!-- com.hospitalmanagement.patient.dao.impl.PatientDAOTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
