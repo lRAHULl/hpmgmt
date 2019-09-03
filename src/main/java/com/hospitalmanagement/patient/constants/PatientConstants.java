@@ -31,4 +31,7 @@ public class PatientConstants {
 	public static final String HPM4000E = "HPM4000E";
 	public static final String HPM4001E = "HPM4001E";
 	public static final String HPM4002E = "HPM4002E";
+	
+	public static final String BUSINESSERROR_STATUSCODE = "400";
+	public static final String SYSTEMERROR_STATUSCODE = "500";
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.hospitalmanagement.patient.dao.factory.FileType;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
@@ -25,12 +26,36 @@ public class Main {
 	 * @throws NoUserExistsException 
 	 * @throws  
 	 */
+	
+	public static FileType getFactoryType;
+	
 	public static void main(String[] args) throws NoUserExistsException {
 		Scanner scanner = new Scanner(System.in);
 		PatientServicesImpl patientServices;
 		int choice;
-		String patientId, patientAge;
+		int patientId = 0, patientAge = 0;
 		String patientName;
+		
+		System.out.println("1. CSV file\n2. JSON file\n3.exit");
+		System.out.print("Enter the type of file you should write to: ");
+		
+		int fileChoice = scanner.nextInt();
+		
+		
+		while(true) {
+			if (fileChoice == 1) {
+				getFactoryType = FileType.CSVFILE;
+				break;
+			} else if (fileChoice == 2) {
+				getFactoryType = FileType.JSONFILE;
+				break;
+			} else if (fileChoice == 3) {
+				return;
+			} else {
+				System.out.println("Enter the correct choice..");
+			}
+		}
+		
 		while(true) {
 			System.out.println("1. Create a patient");
 			System.out.println("2. Read All Patients");
@@ -38,34 +63,47 @@ public class Main {
 			System.out.println("4. Delete a patient");
 			System.out.println("5. Exit");
 			System.out.print("Enter a number to do a operation: ");
-			choice = Integer.valueOf(scanner.nextLine());
+			choice = 2;
+			try {
+				choice = stringToInteger(scanner.nextLine());
+			} catch (Exception e) {
+				System.out.println("Enter the valid input");
+			}
 			switch(choice) {
 			case 1:
 				patientServices = new PatientServicesImpl();
-				System.out.print("Enter the Id: ");
-				patientId = scanner.nextLine();
-				System.out.print("Enter the Name: ");
-				patientName = scanner.nextLine();
-				System.out.print("Enter the age: ");
-				patientAge = scanner.nextLine();
-				List<String> patientAddress = new ArrayList<String>();
-				for (int i = 0; i < 3; i++) {
-					int index = i + 1;
-					System.out.print("Enter the address line " + index + ": ");
-					String addr = scanner.nextLine();
-					if (!addr.equals("")) {
-						patientAddress.add(addr);
-					}					
-				}
 				try {
-					patientServices.createNewPatient(patientId, patientName, patientAge, patientAddress);
+					System.out.print("Enter the Id: ");
+					patientId = stringToInteger(scanner.nextLine());
+					System.out.print("Enter the Name: ");
+					patientName = scanner.nextLine();
+					System.out.print("Enter the age: ");
+					patientAge = stringToInteger(scanner.nextLine());
+					
+					List<String> patientAddress = new ArrayList<String>();
+					for (int i = 0; i < 3; i++) {
+						int index = i + 1;
+						System.out.print("Enter the address line " + index + ": ");
+						String addr = scanner.nextLine();
+						if (!addr.equals("")) {
+							patientAddress.add(addr);
+						} else {
+							patientAddress.add("no info");
+						}
+					}
+					Patient patient = new Patient();
+					patient.setPatientId(patientId);
+					patient.setPatientName(patientName);
+					patient.setPatientAge(patientAge);
+					patient.setPatientAddress(patientAddress);
+					patientServices.createNewPatient(patient);
 				} catch (PatientDirectoryFullException | IdAlreadyExistsException | InputConstraintNotAsExceptedException e) {
 					if (e.getClass().getSimpleName().equals("PatientDirectoryFullException")) {
 						System.out.println("The directory is full :(");
 					} else if (e.getClass().getSimpleName().equals("IdAlreadyExistsException")) {
 						System.out.println("The id already exists");
 					} else if (e.getClass().getSimpleName().equals("InputConstraintNotAsExceptedException")) {
-						System.out.println("Inputs not as expected");
+						System.out.println("You entered wrong inputs in id or age fields");
 					}
 				}
 				break;
@@ -79,25 +117,32 @@ public class Main {
 				break;
 			case 3:
 				patientServices = new PatientServicesImpl();
-				System.out.print("Enter the Id: ");
-				patientId = scanner.nextLine();
-				System.out.print("Enter the new Name: ");
-				patientName = scanner.nextLine();
-				System.out.print("Enter the new age: ");
-				patientAge = scanner.nextLine();
-				List<String> patientUpdateAddress = new ArrayList<String>();
-				for (int i = 0; i < 3; i++) {
-					int index = i + 1;
-					System.out.print("Enter the new address line " + index + ": ");
-					
-					String addr = scanner.nextLine();
-					if (!addr.equals(""))
-						patientUpdateAddress.add(addr);	
-					else 
-						patientUpdateAddress.add(patientServices.readAllPatient().get(Integer.parseInt(patientId)).getPatientAddress().get(i));
-				}
 				try {
-					Patient updatedPatient = patientServices.updateExistingPatient(patientId, patientName, patientAge, patientUpdateAddress);
+					System.out.print("Enter the Id: ");
+					patientId = stringToInteger(scanner.nextLine());
+					System.out.print("Enter the new Name: ");
+					patientName = scanner.nextLine();
+					System.out.print("Enter the new age: ");
+					patientAge = stringToInteger(scanner.nextLine());
+					
+					List<String> patientUpdateAddress = new ArrayList<String>();
+					for (int i = 0; i < 3; i++) {
+						int index = i + 1;
+						System.out.print("Enter the new address line " + index + ": ");
+						
+						String addr = scanner.nextLine();
+						if (!addr.equals("")) {
+							patientUpdateAddress.add(addr);
+						} else {
+							patientUpdateAddress.add("no info");
+						}
+					}
+					Patient patient = new Patient();
+					patient.setPatientId(patientId);
+					patient.setPatientName(patientName);
+					patient.setPatientAge(patientAge);
+					patient.setPatientAddress(patientUpdateAddress);
+					Patient updatedPatient = patientServices.updateExistingPatient(patient);
 					System.out.println("UPDATED PATIENT\n-------------------- \n Id: " + updatedPatient.getPatientId() + " Name: " + updatedPatient.getPatientName() + " Age: " + updatedPatient.getPatientAge());
 				} catch (Exception e) {
 					if (e.getClass().getSimpleName().equals("PatientWithIdNotFoundException")) {
@@ -110,10 +155,14 @@ public class Main {
 			case 4:
 				patientServices = new PatientServicesImpl();
 				System.out.print("Enter a id to delete: ");
-				patientId = scanner.nextLine();
 				try {
+					patientId = stringToInteger(scanner.nextLine());
+
 					Patient deletedPatient = patientServices.deletePatient(patientId);
 					System.out.println("DELETED PATIENT\n-------------------- \n Id: " + deletedPatient.getPatientId() + " Name: " + deletedPatient.getPatientName() + " Age: " + deletedPatient.getPatientAge());
+				
+				} catch (InputConstraintNotAsExceptedException e) {
+					
 				} catch (Exception e) {
 					if (e.getClass().getSimpleName().equals("PatientWithIdNotFoundException")) {
 						System.out.println("Patient with that id is not found");
@@ -129,6 +178,14 @@ public class Main {
 			}
 		}
 
+	}
+	
+	private static int stringToInteger(String in) throws InputConstraintNotAsExceptedException {
+		try {
+			return Integer.parseInt(in);
+		} catch (Exception e) {
+			throw new InputConstraintNotAsExceptedException("Input must be a number");
+		}
 	}
 
 }

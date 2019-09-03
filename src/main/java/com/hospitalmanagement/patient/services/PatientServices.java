@@ -4,8 +4,8 @@
 package com.hospitalmanagement.patient.services;
 
 import java.util.List;
-import java.util.Map;
 
+import com.hospitalmanagement.patient.exceptions.FileReadException;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
@@ -18,9 +18,9 @@ import com.hospitalmanagement.patient.model.Patient;
  *
  */
 public interface PatientServices {
-	public boolean createNewPatient(String id, String name, String age, List<String> address) throws IdAlreadyExistsException, PatientDirectoryFullException, InputConstraintNotAsExceptedException;
-	public Map<Integer, Patient> readAllPatient() throws NoUserExistsException;
-	public Patient updateExistingPatient(String id, String name, String age, List<String> address) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
-	public Patient deletePatient(String id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
-	public int findNumberOfPatients();
+	public boolean createNewPatient(Patient patient) throws IdAlreadyExistsException, PatientDirectoryFullException, InputConstraintNotAsExceptedException;
+	public List<Patient> readAllPatient() throws NoUserExistsException;
+	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
+	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
+	public int findNumberOfPatients() throws FileReadException, NoUserExistsException;
 }

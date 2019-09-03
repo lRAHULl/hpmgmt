@@ -13,6 +13,20 @@ public class Patient {
 	private int patientId;
 	private String patientName;
 	private int patientAge;
+	
+	
+	public Patient() {
+		super();
+	}
+	
+	public Patient(int patientId, String patientName, int patientAge, List<String> patientAddress) {
+		super();
+		this.patientId = patientId;
+		this.patientName = patientName;
+		this.patientAge = patientAge;
+		this.patientAddress = patientAddress;
+	}
+
 	private List<String> patientAddress;
 	
 	public int getPatientId() {

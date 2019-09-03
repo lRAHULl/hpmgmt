@@ -4,7 +4,8 @@
 package com.hospitalmanagement.patient.constants;
 
 import java.util.Arrays;
-import java.util.List;
+
+import com.hospitalmanagement.patient.model.Patient;
 
 /**
  * @author VC
@@ -16,30 +17,13 @@ public class PatientTestConstants {
 	public static String PATIENT_DIRECTORY_FULL_EXCEPTION = "PatientDirectoryFullException";
 	public static String NO_USER_EXISTS_EXCEPTION = "NoUserExistsException";
 	public static String INPUT_CONSTRAINT_NOT_AS_EXPECTED_EXCEPTION = "InputConstraintNotAsExceptedException";
-	public static String NAME_ONE = "AAAA";
-	public static String NAME_TWO = "BBBB";
-	public static String NAME_THREE = "CCCC";
-	public static List<String> ADDRESS_ONE = Arrays.asList("Coda Global", "Chennai", "India");
-	public static List<String> ADDRESS_TWO= Arrays.asList("Google", "Mountain view", "USA");
-	public static List<String> ADDRESS_THREE= Arrays.asList("Microsoft", "Seattle", "USA");
-	public static String NO_ID = "-1";
-	public static String ZERO = "0";
-	public static String ID_ONE = "1";
-	public static String ID_TWO = "2";
-	public static String ID_THREE = "3";
-	public static String ID_FOUR = "4";
-	public static String ID_FIVE = "5";
-	public static String ID_SIX = "6";
-	public static String ID_SEVEN = "7";
-	public static String ID_EIGHT = "8";
-	public static String ID_NINE = "9";
-	public static String ID_TEN = "10";
-	public static String ID_ELEVEN = "11";
-	public static String ID_FALSE = "FALSE";
-	public static String AGE_ONE = "12";
-	public static String AGE_TWO = "18";
-	public static String AGE_THREE = "25";
-
+	public static Patient PATIENT_ONE = new Patient(1, "AAAA", 19, Arrays.asList("Coda Global", "Chennai", "India"));
+	public static Patient PATIENT_TWO = new Patient(2, "BBBB", 20, Arrays.asList("Google", "Mountain view", "USA"));
+	public static Patient PATIENT_THREE = new Patient(3, "CCCC", 21, Arrays.asList("Microsoft", "Seattle", "USA"));
+	public static Patient PATIENT_FOUR = new Patient(4, "AAAA", 19, Arrays.asList("Coda Global", "Chennai", "India"));
+	public static Patient PATIENT_FIVE = new Patient(5, "BBBB", 20, Arrays.asList("Google", "Mountain view", "USA"));
+	public static Patient PATIENT_SIX = new Patient(6, "CCCC", 21, Arrays.asList("Microsoft", "Seattle", "USA"));
+	public static Patient UPDATED_PATIENT_ONE = new Patient(1, "BBBB", 20, Arrays.asList("Google", "Mountain view", "USA"));
 //
 	public static String MESSAGES_SOURCE = "messages-test";
 	

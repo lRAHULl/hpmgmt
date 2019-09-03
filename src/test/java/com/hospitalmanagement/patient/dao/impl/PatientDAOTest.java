@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.hospitalmanagement.patient.dao.PatientDAO;
+import com.hospitalmanagement.patient.exceptions.FileReadException;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
 import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
@@ -56,7 +57,7 @@ public class PatientDAOTest {
 	
 	@BeforeMethod
 	public void setUp() {
-		patientDAO = new PatientDAOImpl();
+		patientDAO = new PatientCSVDAOImpl();
 		File file = new File(FILE_PATH);
 		file.delete();
 	}
@@ -85,7 +86,7 @@ public class PatientDAOTest {
 	}
 	
 	@Test
-	public void readPatientsTest() throws IOException, NoUserExistsException, IdAlreadyExistsException {
+	public void readPatientsTest() throws IOException, NoUserExistsException, IdAlreadyExistsException, FileReadException {
 		Patient patient = new Patient();
 		patient.setPatientId(1);
 		patient.setPatientName("ABCD");
@@ -97,7 +98,7 @@ public class PatientDAOTest {
 	}
 	
 	@Test
-	public void updatePatient() throws IOException, IdAlreadyExistsException {
+	public void updatePatient() throws IOException, IdAlreadyExistsException, FileReadException {
 		Patient p = new Patient();
 		Patient patient = new Patient();
 		patient.setPatientId(1);
@@ -123,7 +124,7 @@ public class PatientDAOTest {
 	}
 	
 	@Test
-	public void deletePatient() throws IOException, IdAlreadyExistsException {
+	public void deletePatient() throws IOException, IdAlreadyExistsException, FileReadException {
 		Patient patient = new Patient();
 		patient.setPatientId(1);
 		patient.setPatientName("ABCD");

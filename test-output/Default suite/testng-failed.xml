@@ -3,18 +3,14 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.hospitalmanagement.patient.dao.impl.PatientDAOTest">
+      <class name="com.hospitalmanagement.patient.services.impl.PatientServicesTest">
         <methods>
-          <include name="readPatientsTest"/>
-          <include name="createPatientTest"/>
-          <include name="deletePatient"/>
-          <include name="updatePatient"/>
-          <include name="flushUp"/>
-          <include name="setUp"/>
           <include name="reset"/>
           <include name="testSetUp"/>
+          <include name="readAllPatientsTest"/>
+          <include name="setUp"/>
         </methods>
-      </class> <!-- com.hospitalmanagement.patient.dao.impl.PatientDAOTest -->
+      </class> <!-- com.hospitalmanagement.patient.services.impl.PatientServicesTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
