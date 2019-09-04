@@ -13,7 +13,7 @@ import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
 import com.hospitalmanagement.patient.model.Patient;
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public interface PatientDAO {

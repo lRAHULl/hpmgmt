@@ -14,9 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hospitalmanagement.patient.dao.PatientDAO;
+import com.hospitalmanagement.patient.dao.factory.FileType;
 import com.hospitalmanagement.patient.dao.factory.PatientDAOFactory;
-import com.hospitalmanagement.patient.dao.impl.PatientCSVDAOImpl;
-import com.hospitalmanagement.patient.dao.impl.PatientJSONDAOImpl;
 import com.hospitalmanagement.patient.exceptions.FileReadException;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
@@ -36,8 +35,6 @@ public class PatientServicesImpl implements PatientServices {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientServicesImpl.class);
 	private static final ResourceBundle MESSAGE_BUNDLER = ResourceBundle.getBundle(LOGGER_MESSAGES);
-	
-	
 	
 	PatientDAOFactory factory = new PatientDAOFactory();
 	PatientDAO patientDAO = factory.getPatientDataSource(Main.getFactoryType);

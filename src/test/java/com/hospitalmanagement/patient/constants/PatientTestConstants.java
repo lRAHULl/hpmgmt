@@ -8,7 +8,7 @@ import java.util.Arrays;
 import com.hospitalmanagement.patient.model.Patient;
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public class PatientTestConstants {

@@ -31,7 +31,7 @@ import static com.hospitalmanagement.patient.constants.PatientDAOConstants.*;
 
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public class PatientDAOTest {

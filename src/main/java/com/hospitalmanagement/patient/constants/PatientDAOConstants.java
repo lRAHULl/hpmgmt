@@ -4,7 +4,7 @@
 package com.hospitalmanagement.patient.constants;
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public class PatientDAOConstants {

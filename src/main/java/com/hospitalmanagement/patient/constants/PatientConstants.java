@@ -34,4 +34,10 @@ public class PatientConstants {
 	
 	public static final String BUSINESSERROR_STATUSCODE = "400";
 	public static final String SYSTEMERROR_STATUSCODE = "500";
+	
+	public static final String PATIENT_DIRECTORY_FULL_EXCEPTION = "PatientDirectoryFullException";
+	public static final String ID_ALREADY_EXISTS_EXCEPTION = "IdAlreadyExistsException";
+	public static final String INPUT_CONSTRAINT_NOT_AS_EXPECTED_EXCEPTION = "InputConstraintNotAsExceptedException";
+	public static final String NULL_POINTER_EXCEPTION = "NullPointerException";
+	public static final String PATIENT_WITH_ID_NOT_FOUND_EXCEPTION = "PatientWithIdNotFoundException";
 }

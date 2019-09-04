@@ -29,7 +29,7 @@ import com.hospitalmanagement.patient.model.Patient;
 import static com.hospitalmanagement.patient.constants.PatientDAOConstants.*;
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public class PatientJSONDAOImpl implements PatientDAO {
@@ -53,7 +53,12 @@ public class PatientJSONDAOImpl implements PatientDAO {
 				jsonReader = new BufferedReader(new FileReader(jsonFile));
 				
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				Type dToListType = new TypeToken<List<Patient>>() {}.getType();
+				Type dToListType = new TypeToken<List<Patient>>() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1696515610824017412L;}.getType();
 				
 				List<Patient> patients = gson.fromJson(jsonReader, dToListType);
 				
@@ -106,7 +111,12 @@ public class PatientJSONDAOImpl implements PatientDAO {
 				jsonReader = new BufferedReader(new FileReader(jsonFile));
 				
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				Type dToListType = new TypeToken<List<Patient>>() {}.getType();
+				Type dToListType = new TypeToken<List<Patient>>() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 2233773872203003955L;}.getType();
 				
 				List<Patient> patients = gson.fromJson(jsonReader, dToListType);
 				
@@ -143,7 +153,12 @@ public class PatientJSONDAOImpl implements PatientDAO {
 				jsonReader = new BufferedReader(new FileReader(jsonFile));
 				
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				Type dToListType = new TypeToken<List<Patient>>() {}.getType();
+				Type dToListType = new TypeToken<List<Patient>>() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -3337113616305503773L;}.getType();
 				
 				List<Patient> patients = gson.fromJson(jsonReader, dToListType);
 				
@@ -203,7 +218,12 @@ public class PatientJSONDAOImpl implements PatientDAO {
 				jsonReader = new BufferedReader(new FileReader(jsonFile));
 				
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				Type dToListType = new TypeToken<List<Patient>>() {}.getType();
+				Type dToListType = new TypeToken<List<Patient>>() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -6141905780534039833L;}.getType();
 				
 				List<Patient> patients = gson.fromJson(jsonReader, dToListType);
 				

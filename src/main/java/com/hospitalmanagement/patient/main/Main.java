@@ -3,18 +3,9 @@
  */
 package com.hospitalmanagement.patient.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import com.hospitalmanagement.patient.dao.factory.FileType;
-import com.hospitalmanagement.patient.driver.PatientDriver;
-import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
-import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
-import com.hospitalmanagement.patient.exceptions.PatientDirectoryFullException;
-import com.hospitalmanagement.patient.model.Patient;
-import com.hospitalmanagement.patient.services.impl.PatientServicesImpl;
+import com.hospitalmanagement.patient.main.driver.PatientDriver;
 
 /**
  * @author rahul

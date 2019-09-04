@@ -4,7 +4,7 @@
 package com.hospitalmanagement.patient.dao.factory;
 
 /**
- * @author VC
+ * @author rahul
  *
  */
 public enum FileType {
