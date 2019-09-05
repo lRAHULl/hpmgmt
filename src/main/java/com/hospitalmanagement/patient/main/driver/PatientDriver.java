@@ -12,9 +12,7 @@ import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
 import com.hospitalmanagement.patient.exceptions.PatientDirectoryFullException;
-import com.hospitalmanagement.patient.main.Main;
 import com.hospitalmanagement.patient.model.Patient;
-import com.hospitalmanagement.patient.services.PatientServices;
 import com.hospitalmanagement.patient.services.impl.PatientServicesImpl;
 
 import static com.hospitalmanagement.patient.constants.PatientConstants.*;
@@ -27,35 +25,15 @@ import static com.hospitalmanagement.patient.main.driver.InputChoice.*;
 public class PatientDriver {
 	
 	static Scanner patientDriverInputScanner = new Scanner(System.in);
+	static PatientServicesImpl patientServices = new PatientServicesImpl();
 	
 	public static void initHospitalManagement() {
-		PatientServices patientServices;
 		
 		Patient patient;
-		
-		System.out.println("1. CSV file\n2. JSON file\n3.exit");
-		System.out.print("Enter the type of file you should write to: ");
-		
-		int fileChoice = 1;
-		try {
-			fileChoice = stringToInteger(patientDriverInputScanner.nextLine());
-		} catch (InputConstraintNotAsExceptedException e) {
-			System.out.println("Enter a valid input");
-		}
-		
-		while(true) {
-			if (fileChoice == 1) {
-				Main.getFactoryType = FileType.CSVFILE;
-				break;
-			} else if (fileChoice == 2) {
-				Main.getFactoryType = FileType.JSONFILE;
-				break;
-			} else {
-				System.out.println("Enter the correct choice..");
-			}
-		}
-		
 		InputChoice inputChoice;
+		FileType inputFileType = getFileInputFromUser();
+		patientServices.setFilePath(inputFileType);
+		
 		int choice;
 		do {
 			printUserChoice();
@@ -74,7 +52,6 @@ public class PatientDriver {
 			
 			switch(inputChoice) {
 			case CREATE:
-				patientServices = new PatientServicesImpl();
 				try {
 					patient = getPatientInput();
 					patientServices.createNewPatient(patient);
@@ -92,7 +69,6 @@ public class PatientDriver {
 				break;
 				
 			case READ_ALL:
-				patientServices = new PatientServicesImpl();
 				try {
 					System.out.println(patientServices.readAllPatient().toString());
 				} catch (NoUserExistsException e1) {
@@ -101,7 +77,6 @@ public class PatientDriver {
 				break;
 				
 			case UPDATE:
-				patientServices = new PatientServicesImpl();
 				try {
 					patient = getPatientInput();
 					Patient updatedPatient = patientServices.updateExistingPatient(patient);
@@ -116,7 +91,6 @@ public class PatientDriver {
 				break;
 				
 			case DELETE:
-				patientServices = new PatientServicesImpl();
 				System.out.print("Enter a id to delete: ");
 				int patientId = 0;
 				try {
@@ -166,11 +140,6 @@ public class PatientDriver {
 																	+ " Age: " + patient.getPatientAge() 
 																	+ " Address: " + patient.getPatientAddress().toString());
 	}
-	 
-	
-	public static void getFileChoiceFromUser() {
-		
-	}
 	
 	
 	public static Patient getPatientInput() throws NullPointerException {
@@ -208,6 +177,28 @@ public class PatientDriver {
 			}
 		}
 		return null;
+	}
+	
+	public static FileType getFileInputFromUser() {
+		System.out.println("1. CSV file\n2. JSON file\n3.exit");
+		System.out.print("Enter the type of file you should write to: ");
+		
+		int fileChoice = 1;
+		try {
+			fileChoice = stringToInteger(patientDriverInputScanner.nextLine());
+		} catch (InputConstraintNotAsExceptedException e) {
+			System.out.println("Enter a valid input");
+		}
+		
+		while(true) {
+			if (fileChoice == 1) {
+				return FileType.CSVFILE;
+			} else if (fileChoice == 2) {
+				return FileType.JSONFILE;
+			} else {
+				System.out.println("Enter the correct choice..");
+			}
+		}
 	}
 }
 	

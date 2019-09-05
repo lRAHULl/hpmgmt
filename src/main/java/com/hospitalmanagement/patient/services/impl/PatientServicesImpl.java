@@ -25,8 +25,6 @@ import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
 import com.hospitalmanagement.patient.model.Patient;
 import com.hospitalmanagement.patient.services.PatientServices;
 
-import com.hospitalmanagement.patient.main.Main;
-
 /**
  * @author rahul
  *
@@ -37,7 +35,13 @@ public class PatientServicesImpl implements PatientServices {
 	private static final ResourceBundle MESSAGE_BUNDLER = ResourceBundle.getBundle(LOGGER_MESSAGES);
 	
 	PatientDAOFactory factory = new PatientDAOFactory();
-	PatientDAO patientDAO = factory.getPatientDataSource(Main.getFactoryType);
+	
+	PatientDAO patientDAO = null;
+	
+	public void setFilePath(FileType inputFileType) {
+		patientDAO = factory.getPatientDataSource(inputFileType);
+	}
+	
 	
 	@Override
 	public boolean createNewPatient(Patient patient) throws PatientDirectoryFullException, IdAlreadyExistsException, InputConstraintNotAsExceptedException {
