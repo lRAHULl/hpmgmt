@@ -11,8 +11,8 @@ public class PatientConstants {
 	public static final String HPM0005T = "HPM0005T";
 	public static final String HPM0006T = "HPM0006T";
 	public static final String HPM0007T = "HPM0007T";
-	
 	public static final String HPM0008T = "HPM0008T";
+	public static final String HPM0009T = "HPM0009T";
 	
 	public static final String HPM1000I = "HPM1000I";
 	public static final String HPM1001I = "HPM1001I";
@@ -31,6 +31,7 @@ public class PatientConstants {
 	public static final String HPM4000E = "HPM4000E";
 	public static final String HPM4001E = "HPM4001E";
 	public static final String HPM4002E = "HPM4002E";
+	public static final String HPM4444E = "HPM4444E";
 	
 	public static final String BUSINESSERROR_STATUSCODE = "400";
 	public static final String SYSTEMERROR_STATUSCODE = "500";

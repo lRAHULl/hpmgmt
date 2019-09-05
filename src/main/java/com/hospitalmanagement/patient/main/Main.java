@@ -18,7 +18,8 @@ public class Main {
 	 * @throws  
 	 */	
 	public static void main(String[] args) throws NoUserExistsException {
-		PatientDriver.initHospitalManagement();
+		PatientDriver driver = new PatientDriver();
+		driver.initHospitalManagement();
 	}
 
 }

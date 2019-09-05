@@ -3,6 +3,7 @@
  */
 package com.hospitalmanagement.patient.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.hospitalmanagement.patient.exceptions.FileReadException;
@@ -18,9 +19,9 @@ import com.hospitalmanagement.patient.model.Patient;
  *
  */
 public interface PatientServices {
-	public boolean createNewPatient(Patient patient) throws IdAlreadyExistsException, PatientDirectoryFullException, InputConstraintNotAsExceptedException;
-	public List<Patient> readAllPatient() throws NoUserExistsException;
-	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
-	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException;
-	public int findNumberOfPatients() throws FileReadException, NoUserExistsException;
+	public boolean createNewPatient(Patient patient) throws IdAlreadyExistsException, PatientDirectoryFullException, InputConstraintNotAsExceptedException, IOException;
+	public List<Patient> readAllPatient() throws NoUserExistsException, IOException, FileReadException;
+	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileReadException;
+	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileReadException;
+	public int findNumberOfPatients() throws FileReadException, NoUserExistsException, IOException;
 }

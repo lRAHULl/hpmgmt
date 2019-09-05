@@ -44,69 +44,46 @@ public class PatientServicesImpl implements PatientServices {
 	
 	
 	@Override
-	public boolean createNewPatient(Patient patient) throws PatientDirectoryFullException, IdAlreadyExistsException, InputConstraintNotAsExceptedException {
+	public boolean createNewPatient(Patient patient) throws PatientDirectoryFullException, IdAlreadyExistsException, InputConstraintNotAsExceptedException, IOException {
 		
 		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLER.getString(HPM0000T), patient.toString()));
-		
-		try {
-			patientDAO.createPatient(patient);
-			return true;
-		} catch (Exception e) {
-			throw new IdAlreadyExistsException();
-		}
+		return patientDAO.createPatient(patient);
+
 	}
 
 	@Override
-	public List<Patient> readAllPatient() throws NoUserExistsException {
+	public List<Patient> readAllPatient() throws NoUserExistsException, IOException, FileReadException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0002T));
-
-		try {
-			List<Patient> results = patientDAO.readPatients();
-			return results;
-		} catch (Exception e) {
-			System.out.println("here");
-			System.out.println(e.getClass().getSimpleName());
-			throw new NoUserExistsException();
-		}
+		List<Patient> results = patientDAO.readPatients();
+		return results;
 	}
 
 	/**
+	 * @throws FileReadException 
+	 * @throws NoUserExistsException 
+	 * @throws IOException 
 	 * 
 	 */
 	@Override
-	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException {
+	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileReadException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0004T));
-		
-		try {
-			Patient updatedPatient = patientDAO.updatePatient(patient.getPatientId(), patient);
-			return updatedPatient;
-		} catch (Exception e) {
-			LOGGER.error(MESSAGE_BUNDLER.getString(HPM4001E));
-			throw new PatientWithIdNotFoundException();
-		}
+		Patient updatedPatient = patientDAO.updatePatient(patient.getPatientId(), patient);
+		return updatedPatient;
 	}
 
 	@Override
-	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException {
+	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileReadException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0006T));
-
-		try {
-			Patient deletedPatient = patientDAO.deletePatient(id);
-			LOGGER.info(MESSAGE_BUNDLER.getString(HPM0007T));
-			return deletedPatient;
-		} catch (Exception e) {
-			LOGGER.error(MESSAGE_BUNDLER.getString(HPM4001E));
-			throw new PatientWithIdNotFoundException();
-		}
+		Patient deletedPatient = patientDAO.deletePatient(id);
+		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0007T));
+		return deletedPatient;
 	}
 	
 	@Override
-	public int findNumberOfPatients() throws FileReadException, NoUserExistsException {
-		
-		try {
-			return patientDAO.readPatients().size();
-		} catch (IOException | NoUserExistsException e) {
-			throw new NoUserExistsException();
-		}
+	public int findNumberOfPatients() throws FileReadException, NoUserExistsException, IOException {
+		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0008T));
+		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLER.getString(HPM0009T), patientDAO.readPatients().size()));
+		return patientDAO.readPatients().size();
 	}
+		
 }
