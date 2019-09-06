@@ -10,8 +10,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
 import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
 import com.hospitalmanagement.patient.model.Patient;
 
+import static com.hospitalmanagement.patient.constants.LoggerConstants.HPM0000T;
 import static com.hospitalmanagement.patient.constants.PatientDAOConstants.*;
 
 /**
@@ -34,39 +37,41 @@ import static com.hospitalmanagement.patient.constants.PatientDAOConstants.*;
  */
 public class PatientJSONDAOImpl implements PatientDAO {
 	
-	Logger LOGGER = LoggerFactory.getLogger(PatientJSONDAOImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PatientJSONDAOImpl.class);
+	private static final ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle(PATIENT_DAO_MESSAGES);
 
 	@Override
 	public boolean createPatient(Patient patient) throws IOException, IdAlreadyExistsException, FileInputOutputException {
-		
+		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0000T), patient.toString()));
 		File jsonFile = new File(JSON_FILE_PATH);
 		
 		BufferedReader jsonReader = null;
 		BufferedWriter jsonWriter = null;
 		
 		if (!jsonFile.exists()) {
+			
 			jsonFile.createNewFile();
 		}
 		if (!jsonFile.isFile()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot contains a file");
 			throw new FileInputOutputException("The given path has no file");
 		}
 		
 		if(!jsonFile.canRead()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot has read permissions");
 			throw new FileInputOutputException("This file has no Read permissions");
 		}
 		
 		if (!jsonFile.canWrite()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot has write permissions");
 			throw new FileInputOutputException("This file has no write permissions");
 		}
 		try {
 			jsonReader = new BufferedReader(new FileReader(jsonFile));
+			LOGGER.debug("BufferedReader object created");
 			
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			Type dToListType = new TypeToken<List<Patient>>() {
-
-				/**
-				 * 
-				 */
 				private static final long serialVersionUID = 1696515610824017412L;}.getType();
 			
 			List<Patient> patients = gson.fromJson(jsonReader, dToListType);
@@ -85,19 +90,20 @@ public class PatientJSONDAOImpl implements PatientDAO {
 				throw new IdAlreadyExistsException("The Id already exists in the directory");
 			} else {
 				patients.add(patient);
-				if (jsonFile.canWrite()) {
-					jsonWriter = new BufferedWriter(new FileWriter(jsonFile));
-					gson.toJson(patients, jsonWriter);
-					return true;
-				}
+				jsonWriter = new BufferedWriter(new FileWriter(jsonFile));
+				LOGGER.debug("BufferedWriter object created");
+				gson.toJson(patients, jsonWriter);
+				return true;
 			}
 		} finally {
-			if (jsonReader != null)
+			if (jsonReader != null) {
 				jsonReader.close();
+				LOGGER.debug("BufferedReader object closed");
+			}
 			if (jsonWriter != null)
 				jsonWriter.close();
+				LOGGER.debug("BufferedWriter object closed");
 		}
-		return false;
 	}
 
 	@Override

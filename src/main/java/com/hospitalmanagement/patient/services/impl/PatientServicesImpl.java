@@ -54,6 +54,7 @@ public class PatientServicesImpl implements PatientServices {
 	public List<Patient> readAllPatient() throws NoUserExistsException, IOException, FileInputOutputException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0002T));
 		List<Patient> results = patientDAO.readPatients();
+		LOGGER.info(MESSAGE_BUNDLER.getString(MESSAGE_BUNDLER.getString(HPM0003T)), results.size());
 		return results;
 	}
 
@@ -68,6 +69,7 @@ public class PatientServicesImpl implements PatientServices {
 	public Patient updateExistingPatient(Patient patient) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileInputOutputException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0004T));
 		Patient updatedPatient = patientDAO.updatePatient(patient.getPatientId(), patient);
+		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLER.getString(HPM0005T), updatedPatient.toString()));
 		return updatedPatient;
 	}
 
@@ -75,7 +77,7 @@ public class PatientServicesImpl implements PatientServices {
 	public Patient deletePatient(int id) throws PatientWithIdNotFoundException, InputConstraintNotAsExceptedException, IOException, NoUserExistsException, FileInputOutputException {
 		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0006T));
 		Patient deletedPatient = patientDAO.deletePatient(id);
-		LOGGER.info(MESSAGE_BUNDLER.getString(HPM0007T));
+		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLER.getString(HPM0007T), deletedPatient.toString()));
 		return deletedPatient;
 	}
 	

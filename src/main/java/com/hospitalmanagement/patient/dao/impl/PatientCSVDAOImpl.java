@@ -32,8 +32,8 @@ import static com.hospitalmanagement.patient.constants.LoggerConstants.*;
  */
 public class PatientCSVDAOImpl implements PatientDAO {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(PatientCSVDAOImpl.class);
-	public static final ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle(PATIENT_DAO_MESSAGES);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PatientCSVDAOImpl.class);
+	private static final ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle(PATIENT_DAO_MESSAGES);
 	
 	@Override
 	public boolean createPatient(Patient patient) throws IOException, IdAlreadyExistsException, FileInputOutputException {
@@ -43,9 +43,11 @@ public class PatientCSVDAOImpl implements PatientDAO {
 		try {
 			File file = new File(FILE_PATH);
 			if (!file.exists()) {
+				LOGGER.debug("New File has been created");
 				file.createNewFile();
 			}
 			if (!file.canWrite()) {
+				LOGGER.error("FileInputOutputException - The file in the path can not be written");
 				throw new FileInputOutputException("The file in the path can not be written");
 			}
 			String newPatientWriteLine = "";
@@ -215,17 +217,21 @@ public class PatientCSVDAOImpl implements PatientDAO {
 		File file = new File(FILE_PATH);
 		BufferedReader reader = null;
 		if (!file.exists()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot exists");
 			throw new FileInputOutputException("The given file doesnot exists");
 		}
 		if (!file.isFile()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot contains a file");
 			throw new FileInputOutputException("The given file doesnot contains a file");
 		}
 		if(!file.canRead()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot has read permissions");
 			throw new FileInputOutputException("The given file doesnot has read permissions");
 		} 
 		
 		try {
 			reader = new BufferedReader(new FileReader(file));
+			LOGGER.debug("BufferedReader object created");
 			reader.readLine();
 			while (reader.readLine() != null) {
 				lines++;
@@ -233,8 +239,10 @@ public class PatientCSVDAOImpl implements PatientDAO {
 			LOGGER.info("Exited the findNumberOfLinesInAFile Utility method with value" + lines);
 			return lines;
 		} finally {
-			if (reader != null)
+			if (reader != null) {
 				reader.close();
+				LOGGER.debug("BufferedReader object closed");
+			}
 		}
 	}
 	
@@ -242,10 +250,13 @@ public class PatientCSVDAOImpl implements PatientDAO {
 		File file = new File(FILE_PATH);
 		List<Patient> readResult = new ArrayList<>();
 		if (!file.exists()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot exists");
 			throw new FileInputOutputException("The given file doesnot exists");
 		} else if (!file.isFile()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot contains a file");
 			throw new FileInputOutputException("The given file doesnot contains a file");
 		} else if(!file.canRead()) {
+			LOGGER.error("FileInputOutputException - The given file doesnot has read permissions");
 			throw new FileInputOutputException("The given file doesnot has read permissions");
 		} else {
 			if (findNumberOflines() > 0) {
