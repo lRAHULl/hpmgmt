@@ -21,5 +21,4 @@ public class Main {
 		PatientDriver driver = new PatientDriver();
 		driver.initHospitalManagement();
 	}
-
 }

@@ -23,7 +23,7 @@ import com.hospitalmanagement.patient.model.Patient;
 import com.hospitalmanagement.patient.services.impl.PatientServicesImpl;
 
 import static com.hospitalmanagement.patient.constants.PatientDAOConstants.FILE_PATH;
-import static com.hospitalmanagement.patient.constants.PatientDAOConstants.TEST_FILE_PATH;
+import static com.hospitalmanagement.patient.constants.PatientDAOConstants.CSV_TEST_FILE_PATH;
 import static com.hospitalmanagement.patient.constants.PatientTestConstants.*;
 
 /**
@@ -40,7 +40,7 @@ public class PatientServicesTest {
 	
 	@BeforeClass
 	public void testSetUp() {
-		FILE_PATH = TEST_FILE_PATH;
+		FILE_PATH = CSV_TEST_FILE_PATH;
 	}
 	
 	@AfterClass

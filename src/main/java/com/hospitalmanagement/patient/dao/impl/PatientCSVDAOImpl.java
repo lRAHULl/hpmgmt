@@ -6,7 +6,6 @@ package com.hospitalmanagement.patient.dao.impl;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,13 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hospitalmanagement.patient.dao.PatientDAO;
-import com.hospitalmanagement.patient.exceptions.FileReadException;
+import com.hospitalmanagement.patient.exceptions.FileInputOutputException;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
 import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
 import com.hospitalmanagement.patient.model.Patient;
 import static com.hospitalmanagement.patient.constants.PatientDAOConstants.*;
-import static com.hospitalmanagement.patient.constants.PatientConstants.*;
+import static com.hospitalmanagement.patient.constants.LoggerConstants.*;
 
 /**
  * @author rahul
@@ -37,11 +36,18 @@ public class PatientCSVDAOImpl implements PatientDAO {
 	public static final ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle(PATIENT_DAO_MESSAGES);
 	
 	@Override
-	public boolean createPatient(Patient patient) throws IOException, IdAlreadyExistsException {
+	public boolean createPatient(Patient patient) throws IOException, IdAlreadyExistsException, FileInputOutputException {
 		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0000T), patient.toString()));
 		BufferedWriter createPatientWriter = null;
+		
 		try {
 			File file = new File(FILE_PATH);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			if (!file.canWrite()) {
+				throw new FileInputOutputException("The file in the path can not be written");
+			}
 			String newPatientWriteLine = "";
 			boolean flag = false;
 			newPatientWriteLine += patient.getPatientId() 
@@ -60,24 +66,21 @@ public class PatientCSVDAOImpl implements PatientDAO {
 					}
 				}
 				if (flag) {
-					throw new IdAlreadyExistsException();
+					throw new IdAlreadyExistsException("The Id already exists in the directory");
 				}
 				createPatientWriter = new BufferedWriter(new FileWriter(file, true));
 				LOGGER.debug("The createPatientWriter FileWriter Object has been created");
 				createPatientWriter.write(newPatientWriteLine);
 				
-				LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0000T), "true"));
+				LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0001T), true));
 				return true;
 			} else {
 				createPatientWriter = new BufferedWriter(new FileWriter(file, true));
 				newPatientWriteLine = NEWFILE_HEAD + newPatientWriteLine;
 				createPatientWriter.write(newPatientWriteLine);
-				LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0000T), "true"));
+				LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0001T), true));
 				return true;
 			}
-		} catch (Exception e) {
-			LOGGER.error(MessageFormat.format("Error occured: ", e.getMessage()));
-			return false;
 		} finally {
 			if (createPatientWriter != null) {
 				createPatientWriter.close();
@@ -87,7 +90,7 @@ public class PatientCSVDAOImpl implements PatientDAO {
 	}
 
 	@Override
-	public List<Patient> readPatients() throws IOException, NoUserExistsException, FileReadException {
+	public List<Patient> readPatients() throws IOException, NoUserExistsException, FileInputOutputException {
 		LOGGER.info(MESSAGE_BUNDLE.getString(HPM0002T));
 		List<Patient> readAllPatientsResults;
 		if (findNumberOflines() > 0) {
@@ -95,13 +98,13 @@ public class PatientCSVDAOImpl implements PatientDAO {
 			LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0003T), readAllPatientsResults.toString()));
 			return readAllPatientsResults;
 		} else {
-			LOGGER.info("No Users exists");
-			throw new NoUserExistsException();
+			LOGGER.info("No users are present in the database");
+			throw new NoUserExistsException("No users are present in the database");
 		}
 	}
 
 	@Override
-	public Patient updatePatient(int id, Patient newPatient) throws IOException, PatientWithIdNotFoundException, NoUserExistsException, FileReadException {
+	public Patient updatePatient(int id, Patient newPatient) throws IOException, PatientWithIdNotFoundException, NoUserExistsException, FileInputOutputException {
 		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0004T), newPatient.toString()));
 		File file = new File(FILE_PATH);
 		List<Patient> readAllPatientsResults;
@@ -148,16 +151,16 @@ public class PatientCSVDAOImpl implements PatientDAO {
 				return returnPatient;
 			} else {
 				LOGGER.info("No patient with the id " + id + " found");
-				throw new PatientWithIdNotFoundException();
+				throw new PatientWithIdNotFoundException("No patient with the id " + id + " found");
 			}			
 		} else {
 			LOGGER.info("No users are present in the database");
-			throw new NoUserExistsException();
+			throw new NoUserExistsException("No users are present in the database");
 		}
 	}
 
 	@Override
-	public Patient deletePatient(int id) throws IOException, PatientWithIdNotFoundException, NoUserExistsException, FileReadException {
+	public Patient deletePatient(int id) throws IOException, PatientWithIdNotFoundException, NoUserExistsException, FileInputOutputException {
 		LOGGER.info(MessageFormat.format(MESSAGE_BUNDLE.getString(HPM0006T), id));
 		File file = new File(FILE_PATH);
 		List<Patient> readResult;
@@ -198,42 +201,52 @@ public class PatientCSVDAOImpl implements PatientDAO {
 				return returnPatient;
 			} else {
 				LOGGER.info("No patient with the id " + id + " found");
-				throw new PatientWithIdNotFoundException();
+				throw new PatientWithIdNotFoundException("No patient with the id " + id + " found");
 			}			
 		} else {
 			LOGGER.info("No users are present in the database");
-			throw new NoUserExistsException();
+			throw new NoUserExistsException("No users are present in the database");
 		}
 	}
 	
-	public int findNumberOflines() throws IOException {
+	public int findNumberOflines() throws IOException, FileInputOutputException {
 		LOGGER.info("Inside the findNumberOfLinesInAFile Utility method");
 		int lines = 0;
 		File file = new File(FILE_PATH);
 		BufferedReader reader = null;
+		if (!file.exists()) {
+			throw new FileInputOutputException("The given file doesnot exists");
+		}
+		if (!file.isFile()) {
+			throw new FileInputOutputException("The given file doesnot contains a file");
+		}
+		if(!file.canRead()) {
+			throw new FileInputOutputException("The given file doesnot has read permissions");
+		} 
+		
 		try {
 			reader = new BufferedReader(new FileReader(file));
 			reader.readLine();
 			while (reader.readLine() != null) {
 				lines++;
 			}
-			
 			LOGGER.info("Exited the findNumberOfLinesInAFile Utility method with value" + lines);
 			return lines;
-		} catch (FileNotFoundException e) {
-			LOGGER.info("File not found or no users exists");
-			return 0;
 		} finally {
 			if (reader != null)
 				reader.close();
 		}
 	}
 	
-	public List<Patient> getPatientsFromFile() throws IOException, FileReadException {
+	public List<Patient> getPatientsFromFile() throws IOException, FileInputOutputException {
 		File file = new File(FILE_PATH);
 		List<Patient> readResult = new ArrayList<>();
-		if (!file.exists() && !file.isFile() && !file.canRead()) {
-			throw new FileReadException("The given file doesnot exists");
+		if (!file.exists()) {
+			throw new FileInputOutputException("The given file doesnot exists");
+		} else if (!file.isFile()) {
+			throw new FileInputOutputException("The given file doesnot contains a file");
+		} else if(!file.canRead()) {
+			throw new FileInputOutputException("The given file doesnot has read permissions");
 		} else {
 			if (findNumberOflines() > 0) {
 				Patient patient;

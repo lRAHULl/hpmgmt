@@ -9,16 +9,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.hospitalmanagement.patient.dao.factory.FileType;
-import com.hospitalmanagement.patient.exceptions.FileReadException;
+import com.hospitalmanagement.patient.exceptions.FileInputOutputException;
 import com.hospitalmanagement.patient.exceptions.IdAlreadyExistsException;
 import com.hospitalmanagement.patient.exceptions.InputConstraintNotAsExceptedException;
 import com.hospitalmanagement.patient.exceptions.NoUserExistsException;
-import com.hospitalmanagement.patient.exceptions.PatientDirectoryFullException;
 import com.hospitalmanagement.patient.exceptions.PatientWithIdNotFoundException;
 import com.hospitalmanagement.patient.model.Patient;
 import com.hospitalmanagement.patient.services.impl.PatientServicesImpl;
 
-import static com.hospitalmanagement.patient.constants.PatientConstants.*;
+import static com.hospitalmanagement.patient.constants.LoggerConstants.*;
 import static com.hospitalmanagement.patient.main.driver.InputChoice.*;
 
 /**
@@ -35,15 +34,16 @@ public class PatientDriver {
 		Patient patient;
 		InputChoice inputChoice;
 		FileType inputFileType = FileType.CSVFILE;
-		do {
-			try {
-				inputFileType = getFileInputFromUser();
+		try {
+			inputFileType = getFileInputFromUser();
+			if (inputFileType != null)
 				patientServices.setFilePath(inputFileType);
-			} catch (InputConstraintNotAsExceptedException e3) {
-				
-				e3.printStackTrace();
-			}
-		} while(!inputFileType.equals(FileType.CSVFILE) || !inputFileType.equals(FileType.JSONFILE));
+			
+		} catch (InputConstraintNotAsExceptedException e) {
+			System.out.println(inputFileType);
+			System.out.println(e.getMessage());
+			System.out.println("");
+		}
 		
 		
 		int choice;
@@ -59,8 +59,9 @@ public class PatientDriver {
 				else 
 					inputChoice = EXIT;
 			} catch (InputConstraintNotAsExceptedException e) {
-				System.out.println("Enter the valid input");
+				System.out.println("\n Entered the unexpected input \n set the file to default file(CSV)");
 			}
+			
 			
 			switch(inputChoice) {
 			case CREATE:
@@ -68,26 +69,28 @@ public class PatientDriver {
 				try {
 					patient = getPatientInput();
 					patientServices.createNewPatient(patient);
-				} catch (PatientDirectoryFullException e2) {
-					
-				} catch (IdAlreadyExistsException e2) {
-					
-				} catch (InputConstraintNotAsExceptedException e2) {
-					e2.printStackTrace();
-				} catch (IOException e2) {
-					e2.printStackTrace();
+				} catch (IdAlreadyExistsException e) {
+					System.out.println(e.getMessage());
+				} catch (InputConstraintNotAsExceptedException e) {
+					System.out.println(e.getMessage());
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				} catch (FileInputOutputException e) {
+					System.out.println(e.getMessage());
 				}
 				break;
 				
 			case READ_ALL:
 				try {
 					System.out.println(patientServices.readAllPatient().toString());
-				} catch (NoUserExistsException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (FileReadException e1) {
-					e1.printStackTrace();
+				} catch (NoUserExistsException e) {
+					System.out.println(e.getMessage());
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				} catch (FileInputOutputException e) {
+					System.out.println(e.getMessage());
+				} catch (NullPointerException e) {
+					System.out.println("No users exists");
 				}
 				
 				break;
@@ -97,22 +100,18 @@ public class PatientDriver {
 				try {
 					patient = getPatientInput();
 					updatedPatient = patientServices.updateExistingPatient(patient);
-				} catch (PatientWithIdNotFoundException e1) {
-					
-					e1.printStackTrace();
-				} catch (InputConstraintNotAsExceptedException e1) {
-					
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					
-					e1.printStackTrace();
-				} catch (NoUserExistsException e1) {
-
-					e1.printStackTrace();
-				} catch (FileReadException e1) {
-					e1.printStackTrace();
+					printResult(updatedPatient);
+				} catch (PatientWithIdNotFoundException e) {
+					System.out.println(e.getMessage());
+				} catch (InputConstraintNotAsExceptedException e) {
+					System.out.println(e.getMessage());
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				} catch (NoUserExistsException e) {
+					System.out.println(e.getMessage());
+				} catch (FileInputOutputException e) {
+					System.out.println(e.getMessage());
 				}
-				printResult(updatedPatient);
 				break;
 				
 			case DELETE:
@@ -123,24 +122,19 @@ public class PatientDriver {
 				try {
 					patientId = stringToInteger(patientDriverInputScanner.nextLine());
 					deletedPatient = patientServices.deletePatient(patientId);
+					printResult(deletedPatient);
 				} catch (PatientWithIdNotFoundException e) {
-					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				} catch (InputConstraintNotAsExceptedException e) {
-					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				} catch (IOException e) {
-					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				} catch (NoUserExistsException e) {
-					
-					e.printStackTrace();
-				} catch (FileReadException e) {
-					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
+				} catch (FileInputOutputException e) {
+					System.out.println(e.getMessage());
 				}
 				
-				printResult(deletedPatient);
 				break;
 				
 			case EXIT:
@@ -164,7 +158,7 @@ public class PatientDriver {
 		try {
 			return Integer.parseInt(in);
 		} catch (NumberFormatException e) {
-			throw new InputConstraintNotAsExceptedException("Input must be a number");
+			throw new InputConstraintNotAsExceptedException(INPUT_MUST_BE_NUMBER_WARN);
 		}
 	}
 	
@@ -186,6 +180,7 @@ public class PatientDriver {
 			patientId = stringToInteger(patientDriverInputScanner.nextLine());
 			System.out.print("Enter the Name: ");
 			patientName = patientDriverInputScanner.nextLine();
+			if (patientName.equals("")) throw new InputConstraintNotAsExceptedException("name cannot be empty");
 			System.out.print("Enter the age: ");
 			patientAge = stringToInteger(patientDriverInputScanner.nextLine());
 			
@@ -213,7 +208,7 @@ public class PatientDriver {
 	}
 	
 	public FileType getFileInputFromUser() throws InputConstraintNotAsExceptedException {
-		System.out.println("1. CSV file\n2. JSON file\n3.exit");
+		System.out.println("1. CSV file\n2. JSON file");
 		System.out.print("Enter the type of file you should write to: ");
 		
 		int fileChoice = 1;
@@ -226,7 +221,8 @@ public class PatientDriver {
 			} else if (fileChoice == 2) {
 				return FileType.JSONFILE;
 			} else {
-				System.out.println("Enter the correct choice..");
+				System.out.println("\n Entered the unexpected input \n set the file to default file(CSV) \n");
+				return null;
 			}
 		}
 	}
